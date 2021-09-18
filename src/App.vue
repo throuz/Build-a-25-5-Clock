@@ -21,6 +21,7 @@ body {
 #app {
   font-family: Microsoft JhengHei;
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
   width: 100%;
   max-width: 500px;

@@ -1,27 +1,67 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
-const inProgress = ref(false);
 const timerLabel = ref("Session");
+const isInProgress = ref(false);
+const minutes = ref(25);
+const seconds = ref(0);
+const breakLength = ref(5);
+const sessionLength = ref(25);
+
+const startStopClick = () => {
+  isInProgress.value = !isInProgress.value;
+};
+
+let nIntervId: any;
+
+function startCountdown() {
+  nIntervId = setInterval(countdown, 1000);
+}
+
+const countdown = () => {
+  if (seconds.value === 0) {
+    minutes.value -= 1;
+    seconds.value = 59;
+  } else {
+    seconds.value -= 1;
+  }
+};
+
+function stopCountdown() {
+  clearInterval(nIntervId);
+}
+
+watch(isInProgress, () => {
+  if (isInProgress.value) {
+    startCountdown();
+  } else {
+    stopCountdown();
+  }
+});
 </script>
 
 <template>
   <div class="timer-wrap">
     <div id="timer-label">{{ timerLabel }}</div>
-    <div id="time-left">25:00</div>
-    <Icon id="start_stop" :icon="inProgress ? 'play' : 'pause'" size="lg" />
+    <div id="time-left">{{ minutes }}:{{ seconds }}</div>
+    <Icon
+      id="start_stop"
+      :icon="isInProgress ? 'pause' : 'play'"
+      size="lg"
+      @click="startStopClick"
+    />
     <Icon id="reset" icon="redo-alt" size="lg" />
   </div>
   <div class="controller-wrap">
     <div id="break-label">Break Length</div>
     <Icon class="icon" id="break-increment" icon="chevron-up" />
-    <div id="break-length">5</div>
+    <div id="break-length">{{ breakLength }}</div>
     <Icon class="icon" id="break-decrement" icon="chevron-down" />
   </div>
   <div class="controller-wrap">
     <div id="session-label">Session Length</div>
     <Icon class="icon" id="session-increment" icon="chevron-up" />
-    <div id="session-length">25</div>
+    <div id="session-length">{{ sessionLength }}</div>
     <Icon class="icon" id="session-decrement" icon="chevron-down" />
   </div>
 </template>
@@ -34,11 +74,9 @@ const timerLabel = ref("Session");
 }
 #timer-label {
   font-size: 30px;
-  font-weight: bold;
 }
 #time-left {
   font-size: 40px;
-  font-weight: bold;
   padding: 5%;
 }
 #start_stop {
