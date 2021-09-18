@@ -1,52 +1,58 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-defineProps<{ msg: string }>()
-
-const count = ref(0)
+const inProgress = ref(false);
+const timerLabel = ref("Session");
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <div class="timer-wrap">
+    <div id="timer-label">{{ timerLabel }}</div>
+    <div id="time-left">25:00</div>
+    <Icon id="start_stop" :icon="inProgress ? 'play' : 'pause'" size="lg" />
+    <Icon id="reset" icon="redo-alt" size="lg" />
+  </div>
+  <div class="controller-wrap">
+    <div id="break-label">Break Length</div>
+    <Icon class="icon" id="break-increment" icon="chevron-up" />
+    <div id="break-length">5</div>
+    <Icon class="icon" id="break-decrement" icon="chevron-down" />
+  </div>
+  <div class="controller-wrap">
+    <div id="session-label">Session Length</div>
+    <Icon class="icon" id="session-increment" icon="chevron-up" />
+    <div id="session-length">25</div>
+    <Icon class="icon" id="session-decrement" icon="chevron-down" />
+  </div>
 </template>
 
 <style scoped>
-a {
-  color: #42b983;
+.timer-wrap {
+  padding: 8% 0;
+  margin: 5%;
+  background: #abc;
 }
-
-label {
-  margin: 0 0.5em;
+#timer-label {
+  font-size: 30px;
   font-weight: bold;
 }
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
+#time-left {
+  font-size: 40px;
+  font-weight: bold;
+  padding: 5%;
+}
+#start_stop {
+  margin-right: 5%;
+}
+.controller-wrap {
+  padding: 3% 10%;
+  margin: 0 5% 3% 5%;
+  display: grid;
+  grid-template-columns: 60% repeat(3, 1fr);
+  background: #abc;
+}
+.icon {
+  justify-self: center;
+  align-self: center;
 }
 </style>
