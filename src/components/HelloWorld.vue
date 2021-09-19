@@ -156,6 +156,10 @@ const sessionDecrement = () => {
 }
 #start_stop {
   margin-right: 5%;
+  cursor: pointer;
+}
+#reset {
+  cursor: pointer;
 }
 .controller-wrap {
   padding: 3% 10%;
@@ -167,5 +171,6 @@ const sessionDecrement = () => {
 .icon {
   justify-self: center;
   align-self: center;
+  cursor: pointer;
 }
 </style>
