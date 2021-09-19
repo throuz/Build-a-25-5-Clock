@@ -47,6 +47,22 @@ const resetClick = () => {
   breakLength.value = 5;
   sessionLength.value = 25;
 };
+
+const breakIncrement = () => {
+  !isInProgress.value && breakLength.value < 60 && (breakLength.value += 1);
+};
+
+const breakDecrement = () => {
+  !isInProgress.value && breakLength.value > 0 && (breakLength.value -= 1);
+};
+
+const sessionIncrement = () => {
+  !isInProgress.value && sessionLength.value < 60 && (sessionLength.value += 1);
+};
+
+const sessionDecrement = () => {
+  !isInProgress.value && sessionLength.value > 0 && (sessionLength.value -= 1);
+};
 </script>
 
 <template>
@@ -59,19 +75,39 @@ const resetClick = () => {
       size="lg"
       @click="startStopClick"
     />
-    <Icon id="reset" icon="redo-alt" size="lg" @click="resetClick" />
+    <Icon id="reset" icon="sync-alt" size="lg" @click="resetClick" />
   </div>
   <div class="controller-wrap">
     <div id="break-label">Break Length</div>
-    <Icon class="icon" id="break-increment" icon="chevron-up" />
+    <Icon
+      class="icon"
+      id="break-increment"
+      icon="chevron-up"
+      @click="breakIncrement"
+    />
     <div id="break-length">{{ breakLength }}</div>
-    <Icon class="icon" id="break-decrement" icon="chevron-down" />
+    <Icon
+      class="icon"
+      id="break-decrement"
+      icon="chevron-down"
+      @click="breakDecrement"
+    />
   </div>
   <div class="controller-wrap">
     <div id="session-label">Session Length</div>
-    <Icon class="icon" id="session-increment" icon="chevron-up" />
+    <Icon
+      class="icon"
+      id="session-increment"
+      icon="chevron-up"
+      @click="sessionIncrement"
+    />
     <div id="session-length">{{ sessionLength }}</div>
-    <Icon class="icon" id="session-decrement" icon="chevron-down" />
+    <Icon
+      class="icon"
+      id="session-decrement"
+      icon="chevron-down"
+      @click="sessionDecrement"
+    />
   </div>
 </template>
 

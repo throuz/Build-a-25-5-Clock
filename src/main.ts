@@ -6,10 +6,10 @@ import {
   faChevronDown,
   faPlay,
   faPause,
-  faRedoAlt,
+  faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faChevronUp, faChevronDown, faPlay, faPause, faRedoAlt);
+library.add(faChevronUp, faChevronDown, faPlay, faPause, faSyncAlt);
 
 createApp(App).component("Icon", FontAwesomeIcon).mount("#app");
