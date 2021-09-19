@@ -9,6 +9,10 @@ const breakLength = ref(5);
 const sessionLength = ref(25);
 let countdowner: number;
 
+const formattedNumber = (value: number) => {
+  return ("0" + value).slice(-2);
+};
+
 const startStopClick = () => {
   isInProgress.value = !isInProgress.value;
 };
@@ -80,7 +84,9 @@ const sessionDecrement = () => {
 <template>
   <div class="timer-wrap">
     <div id="timer-label">{{ nextIsBreak ? "Session" : "Break" }}</div>
-    <div id="time-left">{{ minutes }}:{{ seconds }}</div>
+    <div id="time-left">
+      {{ formattedNumber(minutes) }}:{{ formattedNumber(seconds) }}
+    </div>
     <Icon
       id="start_stop"
       :icon="isInProgress ? 'pause' : 'play'"
