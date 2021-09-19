@@ -15,7 +15,7 @@ const startStopClick = () => {
 let nIntervId: any;
 
 function startCountdown() {
-  nIntervId = setInterval(countdown, 1000);
+  nIntervId = setInterval(countdown, 10);
 }
 
 const countdown = () => {
@@ -38,6 +38,15 @@ watch(isInProgress, () => {
     stopCountdown();
   }
 });
+
+const resetClick = () => {
+  stopCountdown();
+  isInProgress.value = false;
+  minutes.value = 25;
+  seconds.value = 0;
+  breakLength.value = 5;
+  sessionLength.value = 25;
+};
 </script>
 
 <template>
@@ -50,7 +59,7 @@ watch(isInProgress, () => {
       size="lg"
       @click="startStopClick"
     />
-    <Icon id="reset" icon="redo-alt" size="lg" />
+    <Icon id="reset" icon="redo-alt" size="lg" @click="resetClick" />
   </div>
   <div class="controller-wrap">
     <div id="break-label">Break Length</div>
