@@ -7,6 +7,9 @@ const minutes = ref(25);
 const seconds = ref(0);
 const breakLength = ref(5);
 const sessionLength = ref(25);
+const timeOutAudio = new Audio(
+  "https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+);
 let countdowner: number;
 
 const formattedNumber = (value: number) => {
@@ -23,6 +26,7 @@ function startCountdown() {
 
 const countdown = () => {
   if (seconds.value === 0 && minutes.value === 0) {
+    timeOutAudio.play();
     minutes.value = nextIsBreak.value ? breakLength.value : sessionLength.value;
     nextIsBreak.value = !nextIsBreak.value;
     seconds.value = 0;
@@ -48,12 +52,14 @@ watch(isInProgress, () => {
 
 const resetClick = () => {
   stopCountdown();
+  nextIsBreak.value = true;
   isInProgress.value = false;
   minutes.value = 25;
   seconds.value = 0;
   breakLength.value = 5;
   sessionLength.value = 25;
-  nextIsBreak.value = true;
+  timeOutAudio.pause();
+  timeOutAudio.currentTime = 0;
 };
 
 const breakIncrement = () => {
@@ -61,7 +67,7 @@ const breakIncrement = () => {
 };
 
 const breakDecrement = () => {
-  !isInProgress.value && breakLength.value > 0 && (breakLength.value -= 1);
+  !isInProgress.value && breakLength.value > 1 && (breakLength.value -= 1);
 };
 
 const sessionIncrement = () => {
@@ -73,7 +79,7 @@ const sessionIncrement = () => {
 };
 
 const sessionDecrement = () => {
-  if (!isInProgress.value && sessionLength.value < 60) {
+  if (!isInProgress.value && sessionLength.value > 1) {
     sessionLength.value -= 1;
     minutes.value = sessionLength.value;
     seconds.value = 0;
