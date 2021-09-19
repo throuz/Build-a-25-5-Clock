@@ -21,7 +21,7 @@ const startStopClick = () => {
 };
 
 function startCountdown() {
-  countdowner = setInterval(countdown, 1);
+  countdowner = setInterval(countdown, 1000);
 }
 
 const countdown = () => {
@@ -75,6 +75,9 @@ const sessionIncrement = () => {
     sessionLength.value += 1;
     minutes.value = sessionLength.value;
     seconds.value = 0;
+    nextIsBreak.value = true;
+    timeOutAudio.pause();
+    timeOutAudio.currentTime = 0;
   }
 };
 
@@ -83,6 +86,9 @@ const sessionDecrement = () => {
     sessionLength.value -= 1;
     minutes.value = sessionLength.value;
     seconds.value = 0;
+    nextIsBreak.value = true;
+    timeOutAudio.pause();
+    timeOutAudio.currentTime = 0;
   }
 };
 </script>
