@@ -57,11 +57,19 @@ const breakDecrement = () => {
 };
 
 const sessionIncrement = () => {
-  !isInProgress.value && sessionLength.value < 60 && (sessionLength.value += 1);
+  if (!isInProgress.value && sessionLength.value < 60) {
+    sessionLength.value += 1;
+    minutes.value = sessionLength.value;
+    seconds.value = 0;
+  }
 };
 
 const sessionDecrement = () => {
-  !isInProgress.value && sessionLength.value > 0 && (sessionLength.value -= 1);
+  if (!isInProgress.value && sessionLength.value < 60) {
+    sessionLength.value -= 1;
+    minutes.value = sessionLength.value;
+    seconds.value = 0;
+  }
 };
 </script>
 
