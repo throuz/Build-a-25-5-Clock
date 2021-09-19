@@ -1,25 +1,28 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
-const timerLabel = ref("Session");
+const nextIsBreak = ref(true);
 const isInProgress = ref(false);
 const minutes = ref(25);
 const seconds = ref(0);
 const breakLength = ref(5);
 const sessionLength = ref(25);
+let countdowner: number;
 
 const startStopClick = () => {
   isInProgress.value = !isInProgress.value;
 };
 
-let nIntervId: any;
-
 function startCountdown() {
-  nIntervId = setInterval(countdown, 10);
+  countdowner = setInterval(countdown, 1);
 }
 
 const countdown = () => {
-  if (seconds.value === 0) {
+  if (seconds.value === 0 && minutes.value === 0) {
+    minutes.value = nextIsBreak.value ? breakLength.value : sessionLength.value;
+    nextIsBreak.value = !nextIsBreak.value;
+    seconds.value = 0;
+  } else if (seconds.value === 0) {
     minutes.value -= 1;
     seconds.value = 59;
   } else {
@@ -28,7 +31,7 @@ const countdown = () => {
 };
 
 function stopCountdown() {
-  clearInterval(nIntervId);
+  clearInterval(countdowner);
 }
 
 watch(isInProgress, () => {
@@ -46,6 +49,7 @@ const resetClick = () => {
   seconds.value = 0;
   breakLength.value = 5;
   sessionLength.value = 25;
+  nextIsBreak.value = true;
 };
 
 const breakIncrement = () => {
@@ -75,7 +79,7 @@ const sessionDecrement = () => {
 
 <template>
   <div class="timer-wrap">
-    <div id="timer-label">{{ timerLabel }}</div>
+    <div id="timer-label">{{ nextIsBreak ? "Session" : "Break" }}</div>
     <div id="time-left">{{ minutes }}:{{ seconds }}</div>
     <Icon
       id="start_stop"
